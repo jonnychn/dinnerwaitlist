@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Purpose Club Executive Dinner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-alt: #020617;
+      --card: #111827;
+      --accent: #f97316;
+      --accent-soft: rgba(249, 115, 22, 0.15);
+      --text-main: #e5e7eb;
+      --text-soft: #9ca3af;
+      --text-muted: #6b7280;
+      --border-subtle: #1f2933;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.6);
+      --shadow-subtle: 0 8px 30px rgba(15, 23, 42, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #1f2937, #020617);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px 64px;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 1080px;
+    }
+
+    .hero {
+      background: radial-gradient(circle at top, #1f2937 0, #020617 55%);
+      border-radius: var(--radius-xl);
+      padding: 32px 24px 28px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -200px;
+      background:
+        radial-gradient(circle at 0 0, rgba(249, 115, 22, 0.28), transparent 50%),
+        radial-gradient(circle at 100% 10%, rgba(56, 189, 248, 0.25), transparent 52%);
+      mix-blend-mode: screen;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      display: grid;
+      gap: 28px;
+    }
+
+    @media (min-width: 880px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+        align-items: center;
+      }
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 9px 4px 4px;
+      border-radius: 999px;
+      border: 1px solid rgba(249, 115, 22, 0.4);
+      background: rgba(15, 23, 42, 0.7);
+      color: var(--text-soft);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .pill-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, #f97316, #ea580c);
+      box-shadow: 0 0 12px rgba(249, 115, 22, 0.7);
+    }
+
+    .pill-dot::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #fefce8;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 4vw, 38px);
+      line-height: 1.1;
+      margin: 10px 0 12px;
+    }
+
+    .hero-title span {
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-soft);
+      max-width: 560px;
+    }
+
+    .hero-bullets {
+      margin-top: 20px;
+      display: grid;
+      gap: 4px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .hero-bullets strong {
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+
+    .hero-bullets-item::before {
+      content: "•";
+      margin-right: 6px;
+      color: var(--accent);
+    }
+
+    .hero-meta {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .hero-meta span {
+      color: var(--accent);
+    }
+
+    .form-card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 20px;
+      padding: 22px 20px 20px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      box-shadow: var(--shadow-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-title {
+      font-size: 18px;
+      margin: 0 0 4px;
+    }
+
+    .form-sub {
+      font-size: 13px;
+      color: var(--text-soft);
+      margin: 0 0 6px;
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 10px;
+      border: 1px dashed rgba(148, 163, 184, 0.4);
+      padding: 8px 10px;
+      line-height: 1.5;
+    }
+
+    .form-note strong {
+      color: #e5e7eb;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 6px;
+    }
+
+    .field label {
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      background: #020617;
+      border-radius: 10px;
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      padding: 9px 10px;
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.5);
+      background: #020617;
+    }
+
+    .field textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+
+    .helper {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .submit-row {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 14px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #0b1120;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 14px 30px rgba(249, 115, 22, 0.55);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 18px 40px rgba(249, 115, 22, 0.75);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 24px rgba(249, 115, 22, 0.5);
+    }
+
+    .submit-caption {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .logos {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      align-items: center;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+    }
+
+    .logos span {
+      color: var(--text-soft);
+      text-transform: none;
+      letter-spacing: normal;
+      font-size: 12px;
+    }
+
+    .section {
+      margin-top: 40px;
+      border-radius: var(--radius-lg);
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid var(--border-subtle);
+      padding: 22px 18px 20px;
+      box-shadow: 0 8px 26px rgba(15, 23, 42, 0.7);
+    }
+
+    @media (min-width: 880px) {
+      .section {
+        padding: 24px 24px 22px;
+      }
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .section-kicker {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.16em;
+    }
+
+    .section-body {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.7;
+    }
+
+    .contrast-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .contrast-row {
+      display: grid;
+      gap: 10px;
+    }
+
+    @media (min-width: 680px) {
+      .contrast-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .contrast-card {
+      padding: 12px 11px 11px;
+      border-radius: 14px;
+      border: 1px solid rgba(30, 64, 175, 0.8);
+      background: radial-gradient(circle at top, rgba(30, 64, 175, 0.35), rgba(15, 23, 42, 0.95));
+    }
+
+    .contrast-card.bad {
+      border-color: rgba(148, 163, 184, 0.7);
+      background: radial-gradient(circle at top, rgba(51, 65, 85, 0.4), rgba(15, 23, 42, 0.96));
+    }
+
+    .contrast-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .contrast-label.good {
+      color: var(--accent);
+    }
+
+    .contrast-card h4 {
+      margin: 0 0 4px;
+      font-size: 13px;
+    }
+
+    .contrast-card p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .section-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    @media (min-width: 880px) {
+      .section-grid {
+        grid-template-columns: 1.4fr 1fr;
+      }
+    }
+
+    .small-pill {
+      font-size: 11px;
+      padding: 4px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .small-pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 10px;
+      background: var(--accent);
+    }
+
+    .bullets {
+      list-style: none;
+      padding-left: 0;
+      margin: 10px 0 0;
+      display: grid;
+      gap: 6px;
+    }
+
+    .bullets li {
+      position: relative;
+      padding-left: 16px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .bullets li::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      position: absolute;
+      left: 0;
+      top: 7px;
+    }
+
+    .testimonials {
+      margin-top: 10px;
+      display: grid;
+      gap: 12px;
+    }
+
+    @media (min-width: 900px) {
+      .testimonials {
+        grid-template-columns: 1.4fr 1.1fr;
+      }
+    }
+
+    .quote-card {
+      background: rgba(15, 23, 42, 0.98);
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.42);
+      padding: 14px 13px 12px;
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.7;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-card::before {
+      content: "“";
+      position: absolute;
+      font-size: 60px;
+      line-height: 1;
+      color: rgba(31, 41, 55, 0.8);
+      top: -4px;
+      left: 10px;
+    }
+
+    .quote-body {
+      position: relative;
+      margin: 4px 0 6px;
+    }
+
+    .quote-tag {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .quote-tag strong {
+      color: #e5e7eb;
+    }
+
+    .mini-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .mini-quote {
+      font-size: 12px;
+      color: var(--text-soft);
+      padding-left: 10px;
+      border-left: 2px solid rgba(148, 163, 184, 0.55);
+    }
+
+    .mini-quote strong {
+      color: #e5e7eb;
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .footer-note span {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <main class="shell">
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-inner">
+          <div>
+            <div class="pill">
+              <span class="pill-dot"></span>
+              PURPOSE CLUB EXECUTIVE DINNER
+            </div>
+
+            <div class="eyebrow">A curated table for thoughtful leaders</div>
+
+            <h1 class="hero-title">
+              Not a networking event. <span>A quiet room for real conversation.</span>
+            </h1>
+
+            <p class="hero-sub">
+              A small, phone free dinner for executives and professionals who want real conversation, not louder rooms or more business cards. Guests come to pause, reflect, and share the stories that never make it into LinkedIn posts.
+            </p>
+
+            <div class="hero-bullets">
+              <div class="hero-bullets-item">
+                <strong>Introvert friendly</strong> format that makes it safe to speak or simply listen
+              </div>
+              <div class="hero-bullets-item">
+                <strong>Curated guest list</strong> so the room stays purposeful, not transactional
+              </div>
+              <div class="hero-bullets-item">
+                <strong>No solicitation, no pitching</strong> just human to human conversation
+              </div>
+            </div>
+
+            <p class="hero-meta">
+              This dinner is for leaders who care more about who they are becoming than what they are closing.
+            </p>
+
+            <div class="logos">
+              Trusted by leaders from
+              <span>Lenovo</span> ·
+              <span>DBS Bank</span> ·
+              <span>Hong Kong Broadband Network</span> ·
+              <span>Asia Miles</span> ·
+              <span>Baptist University</span>
+              <span>and more</span>
+            </div>
+          </div>
+
+          <!-- FORM CARD -->
+          <aside class="form-card">
+            <div>
+              <h2 class="form-title">Join the dinner waitlist</h2>
+              <p class="form-sub">
+                We keep every dinner intentionally small. Your answers help us protect the quality and safety of the room.
+              </p>
+              <div class="form-note">
+                <strong>Short version:</strong> not every application will receive an immediate invitation. We only offer seats when there is a strong fit between you, the theme, and the table.
+              </div>
+            </div>
+
+            <!-- Replace this block with your real form embed (Typeform, Google Form, Tally etc) -->
+            <form>
+              <div class="field">
+                <label for="name">Full name</label>
+                <input id="name" type="text" placeholder="Your name" />
+              </div>
+
+              <div class="field">
+                <label for="email">Work email</label>
+                <input id="email" type="email" placeholder="you@company.com" />
+              </div>
+
+              <div class="field">
+                <label for="role">Role and organisation</label>
+                <input id="role" type="text" placeholder="e.g. VP Marketing, Lenovo" />
+              </div>
+
+              <div class="field">
+                <label for="location">Location</label>
+                <select id="location">
+                  <option>Hong Kong</option>
+                  <option>Singapore</option>
+                  <option>London</option>
+                  <option>San Francisco Bay Area</option>
+                  <option>Other</option>
+                </select>
+                <div class="helper">If you want to bring Purpose Club to your city, share this below.</div>
+              </div>
+
+              <div class="field">
+                <label for="why">Why does this dinner interest you?</label>
+                <textarea id="why" placeholder="For example: you are tired of transactional networking and want a room where you can be honest."></textarea>
+              </div>
+
+              <div class="field">
+                <label for="theme">What themes are you most drawn to?</label>
+                <textarea id="theme" placeholder="Reinvention, AI and relevance, leadership in uncertainty, purpose, resilience, or something else you want to explore."></textarea>
+              </div>
+
+              <div class="submit-row">
+                <button type="submit" class="btn-primary">
+                  Apply for the waitlist
+                </button>
+                <div class="submit-caption">
+                  No spam, no funnels, no random newsletters. You will only hear from us if there is a table that feels right for you.
+                </div>
+              </div>
+            </form>
+          </aside>
+        </div>
+      </section>
+
+      <!-- SECTION: WHAT MAKES IT DIFFERENT -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">What makes this dinner different</h2>
+          <div class="section-kicker">Depth over noise</div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            Most networking dinners mean loud music, rushed small talk, and a handful of business cards you never use. You leave without any real insight or connection.
+          </p>
+
+          <div class="contrast-list">
+            <div class="contrast-row">
+              <div class="contrast-card bad">
+                <div class="contrast-label">Typical networking</div>
+                <h4>More noise, less meaning</h4>
+                <p>
+                  Crowded rooms, shallow chat, people selling or pitching, and no real outcomes beyond a tired smile and a bigger stack of cards.
+                </p>
+              </div>
+              <div class="contrast-card">
+                <div class="contrast-label good">Purpose Club</div>
+                <h4>A quiet room for honest leaders</h4>
+                <p>
+                  Curated guests, guided questions, and themes that invite reflection. No solicitation. No random selling. Just space to think, listen, and speak openly.
+                </p>
+              </div>
+            </div>
+
+            <div class="contrast-row">
+              <div class="contrast-card bad">
+                <div class="contrast-label">Surface level chat</div>
+                <h4>Where do you work, what do you do</h4>
+                <p>
+                  Conversations that start and end with job titles, metrics, and company updates. You could have had the same chat with anyone.
+                </p>
+              </div>
+              <div class="contrast-card">
+                <div class="contrast-label good">Meaningful conversation</div>
+                <h4>Who you are becoming</h4>
+                <p>
+                  Stories of reinvention, failure, doubt, resilience, and purpose. The parts of leadership that never show up in highlight reels.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: WHO JOINS / WHAT HAPPENS -->
+      <section class="section">
+        <div class="section-grid">
+          <div>
+            <div class="section-header">
+              <h2 class="section-title">Who is this for</h2>
+              <div class="section-kicker">The right room</div>
+            </div>
+            <div class="section-body">
+              <p>
+                Executives, professionals, and educators from technology, finance, consulting, education, and startups. Many describe themselves as quiet high performers or introverts who usually do not open up at events.
+              </p>
+              <ul class="bullets">
+                <li>You want fewer but deeper relationships, not more shallow contacts.</li>
+                <li>You are willing to listen as much as you speak.</li>
+                <li>You value purpose, self mastery, and reflection, not just performance.</li>
+                <li>You are open to sharing real stories, within clear boundaries and respect.</li>
+              </ul>
+              <p style="margin-top:10px;">
+                If that sounds like you, you will likely feel at home at this table.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-header">
+              <h2 class="section-title">What happens at dinner</h2>
+              <div class="section-kicker">Designed for introverts</div>
+            </div>
+            <div class="section-body">
+              <div class="small-pill">
+                <span class="small-pill-dot"></span>
+                Phone free, solicitation free, judgment free
+              </div>
+              <ul class="bullets">
+                <li>Warm arrivals instead of awkward mingling. You are welcomed by name and never left standing alone.</li>
+                <li>Guided conversation instead of random chat. A host leads prompts that invite participation without pressure.</li>
+                <li>Vulnerable stories from the room about bankruptcy, divorce, depression, reinvention, and starting again.</li>
+                <li>Clear takeaways. You leave with new questions, practical insight, and relationships that continue after the evening.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: THEMES -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Themes we explore</h2>
+          <div class="section-kicker">Beyond job titles</div>
+        </div>
+        <div class="section-body">
+          <p>
+            Each dinner centers around one core question, such as:
+          </p>
+          <ul class="bullets">
+            <li>Reinventing your life or city when the script no longer fits.</li>
+            <li>How to learn AI and stay relevant without burning out.</li>
+            <li>Leading through uncertainty when you are not sure you have the answers.</li>
+            <li>Turning setbacks into a new chapter instead of a permanent label.</li>
+          </ul>
+          <p style="margin-top:10px;">
+            The goal is not to impress the room. It is to leave a little more honest, a little less alone, and a little clearer about your next step.
+          </p>
+        </div>
+      </section>
+
+      <!-- SECTION: TESTIMONIALS -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">What past guests say</h2>
+          <div class="section-kicker">In their own words</div>
+        </div>
+
+        <div class="testimonials">
+          <article class="quote-card">
+            <div class="quote-body">
+              <p>
+                "It is not a networking dinner. As someone who identifies as a 99.9 percent introvert, I often find it challenging to open up, especially in networking settings. This dinner felt refreshingly authentic. From the moment I signed up, Aaron took the time to learn about me. Hearing leaders share their ups and downs created a space where sincere, heartfelt sharing could happen. I left feeling inspired and grateful."
+              </p>
+            </div>
+            <div class="quote-tag">
+              <strong>Executive guest</strong>  
+              · Introvert who usually avoids networking events
+            </div>
+          </article>
+
+          <div class="mini-grid">
+            <div class="mini-quote">
+              <strong>"We are not alone."</strong><br />
+              "For two uninterrupted hours, phones stayed untouched, and shop talk took a back seat. We talked about bankruptcy, divorce, depression, and messy life chapters. I walked away remembering that I am not alone."
+            </div>
+            <div class="mini-quote">
+              <strong>"Highly curated and deeply thoughtful."</strong><br />
+              "What struck me most was the quality of mindsets in the room. Every person showed up with openness and a willingness to both support and challenge one another. I drew a lot from the evening and hope I contributed as much as I received."
+            </div>
+            <div class="mini-quote">
+              <strong>"A good norm for next generation networking."</strong><br />
+              "A great platform to meet like minded leaders and share genuine thoughts. It set a new norm for how leaders can connect without noise or ego."
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: WHY WAITLIST -->
+      <section class="section">
+        <div class="section-header">
+          <h2 class="section-title">Why we use a waitlist</h2>
+          <div class="section-kicker">Protecting the room</div>
+        </div>
+
+        <div class="section-body">
+          <p>
+            Purpose Club is intentionally small. Seats are limited so that:
+          </p>
+          <ul class="bullets">
+            <li>Everyone has space to speak or quietly reflect.</li>
+            <li>The mix of backgrounds serves the whole table instead of one agenda.</li>
+            <li>The room stays safe, respectful, and non transactional for introverts and extroverts alike.</li>
+          </ul>
+          <p style="margin-top:10px;">
+            For that reason, not every request will be offered a seat at the next dinner. Your responses on the form help us understand if this is the right room for you and which theme or city might fit best.
+          </p>
+          <p style="margin-top:10px;">
+            If the timing is not right, we will keep you in mind for a future table rather than squeezing you into a room that is already full.
+          </p>
+        </div>
+      </section>
+
+      <div class="footer-note">
+        Ready to join a room that values depth over noise and purpose over transactions<br />
+        Start by <span>joining the waitlist</span> above. We will reach out when the table is ready for you.
+      </div>
+    </main>
+  </div>
+</body>
+</html>
